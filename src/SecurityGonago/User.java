@@ -51,17 +51,5 @@ public class User {
     public void setUserType(String UserType) {
         this.UserType=UserType.toUpperCase();
         this.UserType = UserType;
-    }
-
-    public int getTelephone() {
-        return Telephone;
-    }
-
-    public void setTelephone(int Telephone) {
-        this.Telephone = Telephone;
-    }
-   
-   
-         
-   
+    }   
 }

@@ -5,14 +5,45 @@
  */
 package SecurityGonago;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.PreparedStatement;
+import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class InterfazLoginSG extends javax.swing.JFrame {
+//
+//    private static Connection con;
+//    // Declaramos los datos de conexion a la bd
+//    private static final String driver = "com.mysql.jdbc.Driver";
+//    private static final String user = "rootDuilio";
+//    private static final String pass = "123456";
+//    private static final String url = "jdbc:mysql://localhost:3306/prueba";
+//
+//    // Funcion que va conectarse a mi bd de mysql
+//    public void conector() {
+//        // Reseteamos a null la conexion a la bd
+//        con = null;
+//        try {
+//            Class.forName(driver);
+//            // Nos conectamos a la bd
+//            con = (Connection) DriverManager.getConnection(url, user, pass);
+//            // Si la conexion fue exitosa mostramos un mensaje de conexion exitosa
+//            if (con != null) {
+//                jLabel1.setText("Conexion establecida");
+//            }
+//        } // Si la conexion NO fue exitosa mostramos un mensaje de error
+//        catch (ClassNotFoundException | SQLException e) {
+//            jLabel1.setText("Error de conexion" + e);
+//        }
+//    }
 
-public InterfazLoginSG() {
+    public InterfazLoginSG() {
         initComponents();
         setLocationRelativeTo(null);
         setIconImage(getIconImage());
@@ -28,7 +59,7 @@ public InterfazLoginSG() {
     }
 
     @Override
-        public Image getIconImage() {
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Imagenes/logo_C.png"));
         return retValue;
     }
@@ -51,7 +82,7 @@ public InterfazLoginSG() {
         InputPasswordLogin = new javax.swing.JTextField();
         InputScheduleLogin = new javax.swing.JTextField();
         InputEmailLogin = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        ButtonLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -59,7 +90,7 @@ public InterfazLoginSG() {
         TypeWorkshopLogin = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        EquipmentUsedLogin = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         InputIdLogin = new javax.swing.JTextField();
         InputDateLogin = new com.toedter.calendar.JDateChooser();
@@ -111,12 +142,12 @@ public InterfazLoginSG() {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 255, 255));
-        jButton1.setForeground(new java.awt.Color(0, 51, 51));
-        jButton1.setText("Ingresar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ButtonLogin.setBackground(new java.awt.Color(0, 255, 255));
+        ButtonLogin.setForeground(new java.awt.Color(0, 51, 51));
+        ButtonLogin.setText("Ingresar");
+        ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ButtonLoginActionPerformed(evt);
             }
         });
 
@@ -175,10 +206,10 @@ public InterfazLoginSG() {
         jLabel8.setForeground(new java.awt.Color(0, 51, 51));
         jLabel8.setText("Equipo Usado");
 
-        jTextField6.setBackground(new java.awt.Color(0, 102, 102));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        EquipmentUsedLogin.setBackground(new java.awt.Color(0, 102, 102));
+        EquipmentUsedLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                EquipmentUsedLoginActionPerformed(evt);
             }
         });
 
@@ -211,22 +242,20 @@ public InterfazLoginSG() {
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
+                    .addComponent(ButtonLogin)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(InputEmailLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(InputIdLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(InputPasswordLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(InputScheduleLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(EquipmentUsedLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(TypeUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TypeWorkshopLogin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(InputDateLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(74, 74, 74)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2))
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(62, 62, 62)
                                 .addComponent(jLabel1))))))
@@ -261,7 +290,7 @@ public InterfazLoginSG() {
                             .addComponent(InputPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EquipmentUsedLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -272,7 +301,7 @@ public InterfazLoginSG() {
                             .addComponent(InputDateLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addComponent(ButtonLogin)
                         .addContainerGap())))
         );
 
@@ -291,9 +320,34 @@ public InterfazLoginSG() {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputEmailLoginActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(this, "BIENVENIDO");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void ButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoginActionPerformed
+        
+        String TypeUser = TypeUserLogin.getSelectedItem().toString();
+        String Workshop = TypeWorkshopLogin.getSelectedItem().toString();
+        String id = InputIdLogin.getText();
+        String nombre = InputEmailLogin.getText();
+        String Password = InputPasswordLogin.getText();
+        String Equipment = EquipmentUsedLogin.getText();
+        Date Date = InputDateLogin.getDate();
+        
+        conectar cc = new conectar();
+        Connection cn = cc.conexion();
+        try {
+            PreparedStatement pst = cn.prepareStatement("INSERT INTO idconexion(id,nombre) VALUES(?,?)");
+            pst.setString(1, id);
+            pst.setString(2, nombre);
+
+            int a = pst.executeUpdate();
+            if (a > 0) {
+                JOptionPane.showMessageDialog(this, "Registro exitoso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al agregar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }        // TODO 
+//        JOptionPane.showMessageDialog(this, "BIENVENIDO"+TypeUser+ Workshop +Id+Email+Password+Equipment+Date);
+    }//GEN-LAST:event_ButtonLoginActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
@@ -309,9 +363,9 @@ public InterfazLoginSG() {
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void EquipmentUsedLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EquipmentUsedLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_EquipmentUsedLoginActionPerformed
 
     private void InputIdLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputIdLoginActionPerformed
         // TODO add your handling code here:
@@ -335,25 +389,17 @@ public InterfazLoginSG() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfazLoginSG
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazLoginSG.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfazLoginSG
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazLoginSG.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfazLoginSG
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazLoginSG.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfazLoginSG
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfazLoginSG.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -366,6 +412,8 @@ public InterfazLoginSG() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonLogin;
+    private javax.swing.JTextField EquipmentUsedLogin;
     private com.toedter.calendar.JDateChooser InputDateLogin;
     private javax.swing.JTextField InputEmailLogin;
     private javax.swing.JTextField InputIdLogin;
@@ -373,7 +421,6 @@ public InterfazLoginSG() {
     private javax.swing.JTextField InputScheduleLogin;
     private javax.swing.JComboBox<String> TypeUserLogin;
     private javax.swing.JComboBox<String> TypeWorkshopLogin;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -386,7 +433,10 @@ public InterfazLoginSG() {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
+
+    private void mostrardatos(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
