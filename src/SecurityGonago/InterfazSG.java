@@ -1,8 +1,9 @@
-
 package SecurityGonago;
 
 import java.awt.Toolkit;
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
 
 public class InterfazSG extends javax.swing.JFrame {
@@ -241,10 +242,38 @@ public class InterfazSG extends javax.swing.JFrame {
         String Name = InputName.getText();
         String LastName = InputLastName.getText();
         String Email = InputEmail.getText();
-        String ID = InputID.getText();
+        String Matricula = InputID.getText();
         String TypeUser = InputTypeUser.getSelectedItem().toString();
+        String Contraseña = InputPassword.getText();
 
-        JOptionPane.showMessageDialog(this, "Registro exitoso" + Name +LastName +Email+ID+TypeUser);
+        //Instanciamos un nuevo objeto de conectar y usamos el SCHEMA de bitacora
+        conectar cc = new conectar();
+        Connection cb = cc.bitacora();
+        
+        try {
+            //sentencia que nos añade datos a la base de datos en la columna de Usuario
+            PreparedStatement pst = cb.prepareStatement("INSERT INTO Usuario(Nombre,Apellidos,Email,Matricula,Id_TipoUsuario,Contraseña) VALUES(?,?,?,?,?,?);");
+            //Define el valor de los atributos
+            pst.setString(1, Name);
+            pst.setString(2, LastName);
+            pst.setString(3, Email);
+            pst.setString(4, Matricula);
+            pst.setString(5, TypeUser);
+            pst.setString(6, Contraseña);
+            
+            // Variable que ejecuta el push a la base de datos
+            int a = pst.executeUpdate();
+
+            
+            if (a > 0) {
+                JOptionPane.showMessageDialog(this, "Registro exitoso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al agregar");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+
     }//GEN-LAST:event_ButtonRegisterActionPerformed
 
     private void InputNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputNameActionPerformed
@@ -276,6 +305,7 @@ public class InterfazSG extends javax.swing.JFrame {
 
     private void InputTypeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputTypeUserActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_InputTypeUserActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -337,22 +367,5 @@ public class InterfazSG extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-//    ButtonRegister.addActionListener( new ActionListener(){
-//  
-//
-//    public void actionPerformed() {
-//        //Acciones
-//    }
-//}
-//);
-//    
-//    public User() {
-//        String Name = InputName;
-//        String LastName;
-//        String Email;
-//        String ID;
-//        String UserType;
-//        int Telephone;
-//    }
 
 }

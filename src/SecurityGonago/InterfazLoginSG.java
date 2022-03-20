@@ -12,36 +12,15 @@ import java.sql.SQLException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class InterfazLoginSG extends javax.swing.JFrame {
-//
-//    private static Connection con;
-//    // Declaramos los datos de conexion a la bd
-//    private static final String driver = "com.mysql.jdbc.Driver";
-//    private static final String user = "rootDuilio";
-//    private static final String pass = "123456";
-//    private static final String url = "jdbc:mysql://localhost:3306/prueba";
-//
-//    // Funcion que va conectarse a mi bd de mysql
-//    public void conector() {
-//        // Reseteamos a null la conexion a la bd
-//        con = null;
-//        try {
-//            Class.forName(driver);
-//            // Nos conectamos a la bd
-//            con = (Connection) DriverManager.getConnection(url, user, pass);
-//            // Si la conexion fue exitosa mostramos un mensaje de conexion exitosa
-//            if (con != null) {
-//                jLabel1.setText("Conexion establecida");
-//            }
-//        } // Si la conexion NO fue exitosa mostramos un mensaje de error
-//        catch (ClassNotFoundException | SQLException e) {
-//            jLabel1.setText("Error de conexion" + e);
-//        }
-//    }
+
+    DateFormat dateFormatMDY = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public InterfazLoginSG() {
         initComponents();
@@ -74,19 +53,17 @@ public class InterfazLoginSG extends javax.swing.JFrame {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        InputEmailLogin = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        InputPasswordLogin = new javax.swing.JTextField();
+        TypeUserLogin = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        InputPasswordLogin = new javax.swing.JTextField();
-        InputScheduleLogin = new javax.swing.JTextField();
-        InputEmailLogin = new javax.swing.JTextField();
         ButtonLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        TypeUserLogin = new javax.swing.JComboBox<>();
         TypeWorkshopLogin = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -102,24 +79,20 @@ public class InterfazLoginSG extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(102, 102, 255));
-
-        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
-
-        jLabel2.setBackground(new java.awt.Color(0, 102, 102));
-
         jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setForeground(new java.awt.Color(0, 51, 51));
         jLabel3.setText("Correo");
 
+        InputEmailLogin.setBackground(new java.awt.Color(0, 102, 102));
+        InputEmailLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputEmailLoginActionPerformed(evt);
+            }
+        });
+
         jLabel4.setBackground(new java.awt.Color(0, 102, 102));
         jLabel4.setForeground(new java.awt.Color(0, 51, 51));
         jLabel4.setText("Contraseña");
-
-        jLabel5.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel5.setForeground(new java.awt.Color(0, 51, 51));
-        jLabel5.setText("Horario");
 
         InputPasswordLogin.setBackground(new java.awt.Color(0, 102, 102));
         InputPasswordLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -128,19 +101,15 @@ public class InterfazLoginSG extends javax.swing.JFrame {
             }
         });
 
-        InputScheduleLogin.setBackground(new java.awt.Color(0, 102, 102));
-        InputScheduleLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputScheduleLoginActionPerformed(evt);
-            }
-        });
+        TypeUserLogin.setBackground(new java.awt.Color(0, 255, 255));
+        TypeUserLogin.setForeground(new java.awt.Color(0, 51, 51));
 
-        InputEmailLogin.setBackground(new java.awt.Color(0, 102, 102));
-        InputEmailLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InputEmailLoginActionPerformed(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(102, 102, 255));
+
+        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
+
+        jLabel2.setBackground(new java.awt.Color(0, 102, 102));
 
         ButtonLogin.setBackground(new java.awt.Color(0, 255, 255));
         ButtonLogin.setForeground(new java.awt.Color(0, 51, 51));
@@ -187,9 +156,6 @@ public class InterfazLoginSG extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        TypeUserLogin.setBackground(new java.awt.Color(0, 255, 255));
-        TypeUserLogin.setForeground(new java.awt.Color(0, 51, 51));
-
         TypeWorkshopLogin.setBackground(new java.awt.Color(0, 255, 255));
         TypeWorkshopLogin.setForeground(new java.awt.Color(0, 51, 51));
         TypeWorkshopLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -235,9 +201,6 @@ public class InterfazLoginSG extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -245,12 +208,8 @@ public class InterfazLoginSG extends javax.swing.JFrame {
                     .addComponent(ButtonLogin)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(InputEmailLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(InputIdLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(InputPasswordLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(InputScheduleLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(EquipmentUsedLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(TypeUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TypeWorkshopLogin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(InputDateLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(74, 74, 74)
@@ -272,37 +231,23 @@ public class InterfazLoginSG extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(242, 242, 242))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TypeUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(TypeWorkshopLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(InputIdLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(InputEmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(InputPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(EquipmentUsedLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(InputScheduleLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(InputDateLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addComponent(ButtonLogin)
-                        .addContainerGap())))
+                        .addGap(134, 134, 134))))
         );
 
         pack();
@@ -312,33 +257,36 @@ public class InterfazLoginSG extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_InputPasswordLoginActionPerformed
 
-    private void InputScheduleLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputScheduleLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InputScheduleLoginActionPerformed
-
     private void InputEmailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputEmailLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_InputEmailLoginActionPerformed
 
     private void ButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoginActionPerformed
-        
-        String TypeUser = TypeUserLogin.getSelectedItem().toString();
-        String Workshop = TypeWorkshopLogin.getSelectedItem().toString();
-        String id = InputIdLogin.getText();
-        String nombre = InputEmailLogin.getText();
-        String Password = InputPasswordLogin.getText();
-        String Equipment = EquipmentUsedLogin.getText();
-        Date Date = InputDateLogin.getDate();
-        
-        conectar cc = new conectar();
-        Connection cn = cc.conexion();
-        try {
-            PreparedStatement pst = cn.prepareStatement("INSERT INTO idconexion(id,nombre) VALUES(?,?)");
-            pst.setString(1, id);
-            pst.setString(2, nombre);
 
+        String Workshop = TypeWorkshopLogin.getSelectedItem().toString();
+        String Id = InputIdLogin.getText();
+        String Equipment = EquipmentUsedLogin.getText();
+        String date = InputDateLogin.getDate().toString();
+//        JOptionPane.showMessageDialog(this, );
+
+        conectar cc = new conectar();
+        Connection cb = cc.bitacora();
+        try {
+//             INSERT INTO `bitacora`.`Fecha` (`Fecha`) VALUES ('Fri Mar 18 12:54:23 CST 2022');
+//             INSERT INTO `bitacora`.`Bitacora` (`Id_Taller`, `Id_fecha`, `Equipo_usado`) VALUES ('Area de computo', '2', 'Computadora 2');
+
+            PreparedStatement pst = cb.prepareStatement("INSERT INTO Bitacora(Id_Taller,Equipo_usado,Matricula) VALUES(?,?,?);");
+            pst.setString(1, Workshop);
+            pst.setString(2, Equipment);
+            pst.setString(3, Id);
+
+            PreparedStatement pst2 = cb.prepareStatement("INSERT INTO Fecha(FechaHora) VALUES (?);");
+            pst2.setString(1, date);
+
+            int b = pst2.executeUpdate();
             int a = pst.executeUpdate();
-            if (a > 0) {
+
+            if (a > 0 && b > 0) {
                 JOptionPane.showMessageDialog(this, "Registro exitoso");
             } else {
                 JOptionPane.showMessageDialog(this, "Error al agregar");
@@ -346,7 +294,7 @@ public class InterfazLoginSG extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }        // TODO 
-//        JOptionPane.showMessageDialog(this, "BIENVENIDO"+TypeUser+ Workshop +Id+Email+Password+Equipment+Date);
+//        JOptionPane.showMessageDialog(this, "BIENVENIDO" + TypeUser + Workshop + Id + Email + Password + Equipment + Date);
     }//GEN-LAST:event_ButtonLoginActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -418,7 +366,6 @@ public class InterfazLoginSG extends javax.swing.JFrame {
     private javax.swing.JTextField InputEmailLogin;
     private javax.swing.JTextField InputIdLogin;
     private javax.swing.JTextField InputPasswordLogin;
-    private javax.swing.JTextField InputScheduleLogin;
     private javax.swing.JComboBox<String> TypeUserLogin;
     private javax.swing.JComboBox<String> TypeWorkshopLogin;
     private javax.swing.JButton jButton2;
@@ -427,7 +374,6 @@ public class InterfazLoginSG extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
